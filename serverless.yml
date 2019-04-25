@@ -68,7 +68,7 @@ resources:
               -
                 AttributeName: user_name
                 AttributeType: S
-             -
+              -
                 AttributeName: password
                 AttributeType: S
             KeySchema:
