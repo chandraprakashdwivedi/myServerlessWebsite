@@ -44,8 +44,11 @@ resources:
           Type: AWS::S3::Bucket
           Properties:
               BucketName: ${self:service}-${self:provider.stage}-uploads
-              PublicAccessBlockConfiguration: yes
               WebsiteConfiguration:
                 IndexDocument: index.html
                 ErrorDocument: error.html
-
+              PublicAccessBlockConfiguration:
+                  BlockPublicAcls : true
+                  BlockPublicPolicy : true
+                  IgnorePublicAcls : true
+                  RestrictPublicBuckets : true
