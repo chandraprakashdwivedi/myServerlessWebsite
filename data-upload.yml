@@ -1,6 +1,5 @@
----
 - name: Data uploading to S3
-  host: localhost
+  hosts: localhost
   gather_facts: false
   tasks:
       - aws_s3:
