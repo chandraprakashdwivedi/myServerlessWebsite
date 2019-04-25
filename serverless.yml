@@ -39,6 +39,15 @@ functions:
             path: lambda_functions/get-data
             method: GET
             cors: true
+  weblink2:
+    handler: lambda_functions/signup.lambda_handler
+    memorySize: 128
+    description: My function
+    events:
+        - http:
+            path: lambda_functions/signup
+            method: POST
+            cors: true            
 
             
   
@@ -59,7 +68,13 @@ resources:
               -
                 AttributeName: user_name
                 AttributeType: S
+             -
+                AttributeName: password
+                AttributeType: S
             KeySchema:
+              -
+                AttributeName: user_name
+                KeyType: HASH
               -
                 AttributeName: password
                 KeyType: HASH
