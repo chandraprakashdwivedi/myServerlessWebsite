@@ -58,7 +58,7 @@ resources:
           Properties:
               BucketName: ${self:service}-${self:provider.stage}-uploads
               WebsiteConfiguration:
-                IndexDocument: index.html
+                IndexDocument: signup.html
                 ErrorDocument: error.html
       TestDynamoDbTable:
           Type: 'AWS::DynamoDB::Table'
