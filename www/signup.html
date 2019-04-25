@@ -1,3 +1,25 @@
+<html>
+	<head>
+		<script>
+			function myFunction() {
+				var xhttp = new XMLHttpRequest();
+				var password = document.getElementById("my-demo").val();
+				var user_name = document.getElementById("my-demo").val();
+				var request_data = JSON.stringfy({"user_name": user_name, ""})
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("my-demo").innerHTML = this.responseText;
+					}
+				};
+				xhttp.open("POST", "https://7wf3wawkf6.execute-api.ap-south-1.amazonaws.com/dev/lambda_functions/get-data", true);
+				xhttp.data(request_data)
+				xhttp.send();
+
+			}
+
+		</script>
+	</head>
+
 <form action="action_page.php" style="border:1px solid #ccc">
   <div class="container">
     <h1>Sign Up</h1>
@@ -6,13 +28,13 @@
 
     <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="email" required>
-
+<br/>
     <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
-
+    <input type="password" id="pswd" placeholder="Enter Password" name="psw" required>
+<br/>
     <label for="psw-repeat"><b>Repeat Password</b></label>
     <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-
+<br/>
     <label>
       <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
     </label>
@@ -20,8 +42,10 @@
     <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
     <div class="clearfix">
-      <button type="button" class="cancelbtn">Cancel</button>
-      <button type="submit" class="signupbtn" >Sign Up</button>
+      <button type="button" class="cancelbtn" >Cancel</button>
+      <button type="submit" class="signupbtn" onclick="myFunction()">Sign Up</button>
     </div>
   </div>
 </form
+
+</html>
