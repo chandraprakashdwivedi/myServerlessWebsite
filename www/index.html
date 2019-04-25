@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<script>
+			function myFunction() {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("my-demo").innerHTML = this.responseText;
+					}
+				};
+				xhttp.open("GET", "https://7wf3wawkf6.execute-api.ap-south-1.amazonaws.com/dev/lambda_functions/get-data", true);
+				xhttp.send();
+
+			}
+
+		</script>
+	</head>
+<body>
+	<div align="center">
+		<br>
+		<br>
+		<br>
+		<br>
+		<h1>Hello <span id="my-demo">Cloud Gurus!</span></h1>
+		<button onclick="myFunction()">Click me</button>
+		<br>
+		<img src="https://s3.ap-south-1.amazonaws.com/sls-website-dev-uploads/niceshot.jpg">
+	</div>
+
+	</body>
+</html>
