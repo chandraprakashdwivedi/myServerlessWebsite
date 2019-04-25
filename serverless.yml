@@ -1,0 +1,85 @@
+service: test-sls # NOTE: update this with your service name
+#awsKmsKeyArn: arn:aws:kms:us-east-1:XXXXXX:key/some-hash
+
+provider:
+  name: aws
+  runtime: python3.6
+  versionFunctions: false
+  #role: arn:aws:iam::12345:role/LambdaRole #For roles based login
+  stage: dev
+  region: ap-south-1
+
+  
+# you can add statements to the Lambda function's IAM Role here
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "uploadBucket" } ] ]  }
+    - Effect: "Allow"
+      Action:
+        - "sns:publish"
+      Resource: "*"
+       # Fn::Join:    #To add multiple resources
+        #  - ""
+         # - - "arn:aws:s3:::"
+          #  - "Ref" : "ServerlessDeploymentBucket"
+           # - "/*"
+    - Effect: "Allow"
+      Action:
+        - "sqs:*"
+      Resource: "*"
+
+  resourcePolicy:
+    - Effect: Allow
+      Principal:
+            AWS:
+              - {"Fn::Join" :["", ["arn:aws:iam::",{"Ref" : "AWS::AccountId"},":user/jenkins_user"]]}
+              - {"Fn::Join" :["", ["arn:aws:iam::",{"Ref" : "AWS::AccountId"},":root"]]}
+      Action: execute-api:Invoke
+      Resource:
+        - execute-api:/*/*/*
+    - Effect: Allow
+      Principal: "*"
+      Action: execute-api:Invoke
+      Resource:
+        - execute-api:/*/*/*
+      Condition:
+        IpAddress:
+          aws:SourceIp:
+            - "0.0.0.0/0"
+
+
+
+functions:
+  weblink1:
+    handler: lambda_functions/get-data.lambda_handler
+    memorySize: 128
+    description: My function
+    #onError: {"Fn::Sub" :"arn:aws:sns:${self:provider.region}:{ "Ref" : "AWS::AccountId" }:${self:service}-${self:provider.stage}-topic" }
+    events:
+        - http:
+            path: lambda_functions/get-data
+            method: GET
+            cors: true
+  weblink2:
+    handler: lambda_functions/
+    memorySize: 128
+    description: My function to feed login information
+    events:
+        - http:
+            path: lambda_functions/get-data
+            method: GET
+            cors: true
+            
+  
+resources:
+  Resources:
+      uploadBucket:
+          Type: AWS::S3::Bucket
+          Properties:
+              BucketName: ${self:service}-${self:provider.stage}-uploads
+              WebsiteConfiguration:
+                IndexDocument: index.html
+                ErrorDocument: error.html
+
