@@ -74,7 +74,7 @@ resources:
             KeySchema:
               -
                 AttributeName: user_name
-                KeyType: HASH
+                KeyType: RANGE
               -
                 AttributeName: password
                 KeyType: HASH
