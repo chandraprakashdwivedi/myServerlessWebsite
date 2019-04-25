@@ -22,6 +22,10 @@ provider:
       Action:
         - "sqs:*"
       Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource: "*"
 
 
 
@@ -47,4 +51,20 @@ resources:
               WebsiteConfiguration:
                 IndexDocument: index.html
                 ErrorDocument: error.html
-     
+      TestDynamoDbTable:
+          Type: 'AWS::DynamoDB::Table'
+          DeletionPolicy: Retain
+          Properties:
+            AttributeDefinitions:
+              -
+                AttributeName: user_name
+                AttributeType: S
+            KeySchema:
+              -
+                AttributeName: password
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            TableName: ${self:service}-${self:provider.stage}-table1
+
