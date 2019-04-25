@@ -88,11 +88,11 @@ resources:
           Properties:
             AttributeDefinitions:
               -
-                AttributeName: password
+                AttributeName: user_namee
                 AttributeType: S
             KeySchema:
               -
-                AttributeName: password
+                AttributeName: user_namee
                 KeyType: HASH
             ProvisionedThroughput:
               ReadCapacityUnits: 1
