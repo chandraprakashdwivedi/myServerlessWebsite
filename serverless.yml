@@ -1,4 +1,4 @@
-service: test-sls # NOTE: update this with your service name
+service: sls-website # NOTE: update this with your service name
 #awsKmsKeyArn: arn:aws:kms:us-east-1:XXXXXX:key/some-hash
 
 provider:
@@ -56,21 +56,12 @@ functions:
     handler: lambda_functions/get-data.lambda_handler
     memorySize: 128
     description: My function
-    #onError: {"Fn::Sub" :"arn:aws:sns:${self:provider.region}:{ "Ref" : "AWS::AccountId" }:${self:service}-${self:provider.stage}-topic" }
     events:
         - http:
             path: lambda_functions/get-data
             method: GET
             cors: true
-  weblink2:
-    handler: lambda_functions/
-    memorySize: 128
-    description: My function to feed login information
-    events:
-        - http:
-            path: lambda_functions/get-data
-            method: GET
-            cors: true
+
             
   
 resources:
@@ -79,6 +70,7 @@ resources:
           Type: AWS::S3::Bucket
           Properties:
               BucketName: ${self:service}-${self:provider.stage}-uploads
+              PublicAccessBlockConfiguration: yes
               WebsiteConfiguration:
                 IndexDocument: index.html
                 ErrorDocument: error.html
