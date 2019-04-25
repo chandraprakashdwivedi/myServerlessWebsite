@@ -60,7 +60,7 @@ resources:
               WebsiteConfiguration:
                 IndexDocument: signup.html
                 ErrorDocument: error.html
-      TestDynamoDbTable:
+      UserDbTable:
           Type: 'AWS::DynamoDB::Table'
           DeletionPolicy: Retain
           Properties:
@@ -78,6 +78,22 @@ resources:
               -
                 AttributeName: user_name
                 KeyType: RANGE
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+            TableName: ${self:service}-${self:provider.stage}-table1
+      passwordDbTable:
+          Type: 'AWS::DynamoDB::Table'
+          DeletionPolicy: Retain
+          Properties:
+            AttributeDefinitions:
+              -
+                AttributeName: password
+                AttributeType: S
+            KeySchema:
+              -
+                AttributeName: password
+                KeyType: HASH
             ProvisionedThroughput:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
