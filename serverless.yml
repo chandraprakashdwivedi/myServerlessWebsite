@@ -66,20 +66,18 @@ resources:
           Properties:
             AttributeDefinitions:
               -
-                AttributeName: user_name
-                AttributeType: S
-            AttributeDefinitions:
-              -
                 AttributeName: password
                 AttributeType: S
-            KeySchema:
               -
                 AttributeName: user_name
-                KeyType: HASH
+                AttributeType: S
             KeySchema:
               -
                 AttributeName: password
                 KeyType: HASH
+              -
+                AttributeName: user_name
+                KeyType: RANGE
             ProvisionedThroughput:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
