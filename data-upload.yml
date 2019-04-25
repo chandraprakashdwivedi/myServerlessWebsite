@@ -1,0 +1,10 @@
+---
+- name: Data uploading to S3
+  host: localhost
+  gather_facts: false
+  tasks:
+      - aws_s3:
+          bucket: sls-website-dev-uploads
+          src: /www/*
+          mode: put
+            
