@@ -9,3 +9,4 @@ node('master'){
       stage('Data upload'){
             sh 'ansible-playbook data-upload.yml'
     }
+}
