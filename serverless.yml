@@ -68,6 +68,7 @@ resources:
               -
                 AttributeName: user_name
                 AttributeType: S
+            AttributeDefinitions:
               -
                 AttributeName: password
                 AttributeType: S
@@ -75,6 +76,7 @@ resources:
               -
                 AttributeName: user_name
                 KeyType: RANGE
+            KeySchema:
               -
                 AttributeName: password
                 KeyType: HASH
