@@ -6,4 +6,6 @@ node('master'){
           DeployCloudFormation.Deploy()
           //RemoveCloudFormation.Delete() //to delete stack
       }
+      stage('Data upload'){
+            sh 'ansible-playbook data-upload.yml"
     }
