@@ -3,15 +3,11 @@
 		<script>
 			function myFunction() {
 				var xhttp = new XMLHttpRequest();
-				var password = document.getElementById("my-demo").val();
-				var user_name = document.getElementById("my-demo").val();
-				var request_data = JSON.stringfy({"user_name": user_name, ""})
-				xhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("my-demo").innerHTML = this.responseText;
-					}
+				var password = document.getElementsByName("psw").val();
+				var user_name = document.getElementsByName("email").val();
+				var request_data = JSON.stringfy{"user_name": email, "password": psw}
 				};
-				xhttp.open("POST", "https://7wf3wawkf6.execute-api.ap-south-1.amazonaws.com/dev/lambda_functions/get-data", true);
+				xhttp.open("POST", "https://7wf3wawkf6.execute-api.ap-south-1.amazonaws.com/dev/lambda_functions/signup", true);
 				xhttp.data(request_data)
 				xhttp.send();
 
@@ -30,7 +26,7 @@
     <input type="text" placeholder="Enter Email" name="email" required>
 <br/>
     <label for="psw"><b>Password</b></label>
-    <input type="password" id="pswd" placeholder="Enter Password" name="psw" required>
+    <input type="password" placeholder="Enter Password" name="psw" required>
 <br/>
     <label for="psw-repeat"><b>Repeat Password</b></label>
     <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
