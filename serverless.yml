@@ -38,7 +38,7 @@ functions:
         - http:
             path: lambda_functions/get-data
             method: GET
-            cors: true
+           
   weblink2:
     handler: lambda_functions/signup.lambda_handler
     memorySize: 128
@@ -47,7 +47,7 @@ functions:
         - http:
             path: lambda_functions/signup
             method: POST
-            cors: true            
+                      
 
             
   
