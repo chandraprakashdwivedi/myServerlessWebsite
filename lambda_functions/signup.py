@@ -1,6 +1,8 @@
 import json
 import boto3
 
+print("calling lambda fucntion")
+
 dynamodb = boto3.resource('dynamodb')
 
 def lambda_handler(event, context):
@@ -16,8 +18,7 @@ def lambda_handler(event, context):
     
     resp = {
         "statusCode": 200,
-        "body":json.dumps('Item Inserted successfully')
-
+        "body": 'Item Inserted successfully'
     }
     
     return resp
