@@ -29,17 +29,7 @@ provider:
 
 
 
-functions:
-  weblink1:
-    handler: lambda_functions/get-data.lambda_handler
-    memorySize: 128
-    description: My function
-    events:
-        - http:
-            path: lambda_functions/get-data
-            method: GET
-            cors: true
-           
+functions:         
   weblink2:
     handler: lambda_functions/signup.lambda_handler
     memorySize: 128
@@ -48,7 +38,11 @@ functions:
         - http:
             path: lambda_functions/signup
             method: POST
-            cors: true                      
+            cors: true
+        - http:
+            path: lambda_functions/login
+            method: GET
+            cors: true 
 
 resources:
   Resources:
