@@ -1,78 +1,27 @@
-service: sls-website 
+import json
+import boto3
 
-provider:
-  name: aws
-  runtime: python3.6
-  versionFunctions: false
-  stage: dev
-  region: ap-south-1
+print("calling lambda fucntion")
 
-  
+dynamodb = boto3.resource('dynamodb')
 
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "s3:*"
-      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "uploadBucket" } ] ]  }
-    - Effect: "Allow"
-      Action:
-        - "sns:publish"
-      Resource: "*"
-    - Effect: "Allow"
-      Action:
-        - "sqs:*"
-      Resource: "*"
-    - Effect: "Allow"
-      Action:
-        - "dynamodb:*"
-      Resource: "*"
+def lambda_handler(event, context):
+    print("event", event)
+    table = dynamodb.Table('sls-website-dev-table1')
+    if 'body' in event and event['body'] is not None:
+        body = json.loads(event['body'])
+    item = {
+        "user_name": body['user_name'],
+        "password": body['password']
+        }
+    table.put_item(Item=item)
 
+ def get_login_data(event, context):
+    print("event",event)
 
+    resp = {
+        "statusCode": 200,
+        "body": 'Item Inserted successfully'
+    }
 
-functions:         
-  weblink2:
-    handler: lambda_functions/signup.lambda_handler
-    memorySize: 128
-    description: My function
-    events:
-        - http:
-            path: lambda_functions/signup
-            method: POST          
-        - http:
-            path: lambda_functions/login
-            method: GET
-             
-
-resources:
-  Resources:
-      uploadBucket:
-          Type: AWS::S3::Bucket
-          Properties:
-              BucketName: ${self:service}-${self:provider.stage}-uploads
-              WebsiteConfiguration:
-                IndexDocument: signup.html
-                ErrorDocument: error.html
-      TestDynamoDbTable:
-          Type: 'AWS::DynamoDB::Table'
-          DeletionPolicy: Retain
-          Properties:
-            AttributeDefinitions:
-              -
-                AttributeName: password
-                AttributeType: S
-              -
-                AttributeName: user_name
-                AttributeType: S
-            KeySchema:
-              -
-                AttributeName: password
-                KeyType: HASH
-              -
-                AttributeName: user_name
-                KeyType: RANGE
-            ProvisionedThroughput:
-              ReadCapacityUnits: 1
-              WriteCapacityUnits: 1
-            TableName: ${self:service}-${self:provider.stage}-table1
-
-
+    return resp
