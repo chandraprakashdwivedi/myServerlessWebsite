@@ -16,6 +16,9 @@ def lambda_handler(event, context):
         }
     table.put_item(Item=item)
     
+ def get_login_data(event, context):
+    print("event",event)
+    
     resp = {
         "statusCode": 200,
         "body": 'Item Inserted successfully'
