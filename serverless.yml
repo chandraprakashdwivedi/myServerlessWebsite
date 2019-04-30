@@ -38,11 +38,11 @@ functions:
         - http:
             path: lambda_functions/signup
             method: POST
-            cors: true
+            cors: false
         - http:
             path: lambda_functions/login
             method: GET
-            cors: true 
+            cors: false 
 
 resources:
   Resources:
