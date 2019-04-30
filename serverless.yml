@@ -37,12 +37,11 @@ functions:
     events:
         - http:
             path: lambda_functions/signup
-            method: POST
-            cors: false
+            method: POST           
         - http:
             path: lambda_functions/login
             method: GET
-            cors: false 
+        
 
 resources:
   Resources:
