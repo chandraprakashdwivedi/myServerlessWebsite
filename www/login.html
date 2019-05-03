@@ -4,16 +4,13 @@
 <script>
 	function myFunction(){
 		var xhttp = new XMLHttpRequest();
-		xhttp.addEventListener('load', function(){
-			console.log('listener@@@@', this);
-		});
 		var username = document.getElementById('uname').value;
 		var password = document.getElementById('paswd').value;
 		var request_data = JSON.stringify({"user_name": username ,"password": password});
 		xhttp.onreadystatechange = function() {
 		console.log('@@@@@@@@@@@@@@@@',this);
 				    if (this.readyState == 4 && this.status == 200) {
-						document.getElementById("output-div").innerHTML = this.responseText;
+						document.getElementById("output-div").innerHTML = "<b>"+this.responseText+"</b>";
 				   }
 				};
 		xhttp.open("POST","https://7wf3wawkf6.execute-api.ap-south-1.amazonaws.com/dev/lambda_functions/login",true);
