@@ -43,11 +43,7 @@ functions:
             path: lambda_functions/login
             method: POST
             cors: true
-        - http:
-            path: lambda_functions/response
-            method: GET
-            cors: true
-        
+
 
 resources:
   Resources:
