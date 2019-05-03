@@ -20,10 +20,10 @@ def lambda_handler(event, context):
 def post_call_method(requested_resource, table,event):
     if '/lambda_functions/login' == requested_resource:
         return login_call(table, event)
-    elif 'lambda_functions/signup' == requested_resource:
+    elif '/lambda_functions/signup' == requested_resource:
         return signin_call(table, event)
     else:
-        return create_reposne('404 Not Found')
+        return create_response('404 Not Found')
         
 def get_call_method(requested_resource, table,event):
    
@@ -52,9 +52,11 @@ def signin_call(table,event):
         "user_name": body['user_name'],
         "password": body['password']
         }
-    data = table.get_item(TableName=table_name,Key=item(user_name))
+    data = table.get_item(Key=item)
+    print('data', data)
     if 'Item' not in data:
         table.put_item(Item=item)
+        return create_response('User Registered Successfully')
     return create_response('Please choose different user name')
         
 
