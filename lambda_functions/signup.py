@@ -6,6 +6,7 @@ print("calling lambda fucntion")
 dynamodb = boto3.resource('dynamodb')
 table_name = 'sls-website-dev-table1'
 
+
 def lambda_handler(event, context):
     print("event", event)
     table = dynamodb.Table(table_name)
@@ -14,7 +15,7 @@ def lambda_handler(event, context):
     if http_method == 'POST':
       return post_call_method(requested_resource,table,event)
     else:
-      return create_reponse("Nothing for GET as of now")
+      return get_call_method(requested_resource, table,event)
 
 def post_call_method(requested_resource, table,event):
     if '/lambda_functions/login' == requested_resource:
@@ -24,7 +25,9 @@ def post_call_method(requested_resource, table,event):
     else:
         return create_reposne('404 Not Found')
         
-
+def get_call_method(requested_resource, table,event):
+   
+        return create_response('No Get request yet')
     
 def login_call(table,event):
     if 'body' in event and event['body'] is not None:
@@ -33,10 +36,11 @@ def login_call(table,event):
         "user_name": body['user_name'],
         "password": body['password']
         }
-    data = table.get_item(TableName=table_name,Key=key)
+    data = table.get_item(Key=key)
     
     print('data', data)
-    if not data:
+
+    if 'Item' not in data:
         return create_response('User name and password not matched.')
     return create_response('Succefully Logged in.')
   
@@ -49,13 +53,16 @@ def signin_call(table,event):
         "password": body['password']
         }
     data = table.get_item(TableName=table_name,Key=item(user_name))
-    if not data:
+    if 'Item' not in data:
         table.put_item(Item=item)
     return create_response('Please choose different user name')
         
 
 def create_response(body):
     return {
-        "statusCode": 200,
+          "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+        },
         "body": body
         }
