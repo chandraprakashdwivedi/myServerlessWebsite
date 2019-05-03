@@ -1,4 +1,5 @@
 <html>
+	<link rel="stylesheet" type="text/css" href="https://s3.ap-south-1.amazonaws.com/sls-website-dev-uploads/css/myweb.css">
 	<head>
 	  <script>
 			function myFunction() {
@@ -8,15 +9,16 @@
 				var request_data = JSON.stringify({"user_name": user_name, "password": password});
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-						document.getElementById("mydemo").innerHTML = this.responseText;
+						document.getElementById("output-div").innerHTML = "<b>"+this.responseText+"</b>";
 				   }
 				};				
-				xhttp.open("POST", "https://7wf3wawkf6.execute-api.ap-south-1.amazonaws.com/dev/lambda_functions/signup", true);
-			//	xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8"); 
+				xhttp.open("POST", "https://7wf3wawkf6.execute-api.ap-south-1.amazonaws.com/dev/lambda_functions/signup", true);			
 				xhttp.send(request_data);
-				alert('Fucntion is working');
+				
 			}
+			
 		</script>
+		
 	</head>
 
 <body>
@@ -34,22 +36,23 @@
     <label for="psw-repeat"><b>Repeat Password</b></label>
     <input type="password" placeholder="Repeat Password" id="psw-repeat" required>
 <br/>
-    <label>
-      <input type="checkbox" checked="checked" id="remember" style="margin-bottom:15px"> Remember me
-    </label>
 
     <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
     <div class="clearfix">
-      <button type="button" class="cancelbtn" >Cancel</button>
+      <button type="button" class="cancelbtn" onclick="window.location.href= 'https://s3.ap-south-1.amazonaws.com/sls-website-dev-uploads/goback.jpg '">Cancel</button>
       <button type="submit" id="btn"  onclick="myFunction()">Sign Up</button>
     </div>
   </div>
-  <br/>
   
-      <label id="mydemo">output</label>
-    
+  <br/>
 <br/>
+<br/> <div id="output-div"></div> 
+<br/>
+  
+  <h2><label>If already a user <a href="https://s3.ap-south-1.amazonaws.com/sls-website-dev-uploads/login.html">click here</a> to login</h2>
+  
+     
 </body>
 
 </html>
