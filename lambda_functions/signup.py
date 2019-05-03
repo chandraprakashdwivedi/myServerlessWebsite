@@ -23,11 +23,11 @@ def post_call_method(requested_resource, table,event):
     elif '/lambda_functions/signup' == requested_resource:
         return signin_call(table, event)
     else:
-        return create_response('404 Not Found')
+         return create_response(body='Not Found.', status_code=500)
         
 def get_call_method(requested_resource, table,event):
    
-        return create_response('No Get request yet')
+        return create_response(body='No Get request yet', status_code=500)
     
 def login_call(table,event):
     if 'body' in event and event['body'] is not None:
@@ -41,8 +41,8 @@ def login_call(table,event):
     print('data', data)
 
     if 'Item' not in data:
-        return create_response('User name and password not matched.')
-    return create_response('Succefully Logged in.')
+        return create_response(body='User name and password not matched.', status_code=500)
+    return create_response(body='Succefully Logged in.')
   
   
 def signin_call(table,event):
@@ -56,15 +56,16 @@ def signin_call(table,event):
     print('data', data)
     if 'Item' not in data:
         table.put_item(Item=item)
-        return create_response('User Registered Successfully')
-    return create_response('Please choose different user name')
+        return create_response(body='User Registered Successfully')
+    return create_response(body='Please choose different user name', status_code=500)
         
 
-def create_response(body):
+def create_response(body, status_code=200):
+    body_json = {'message': body, 'status_code':status_code}
     return {
           "statusCode": 200,
         "headers": {
             "Access-Control-Allow-Origin": "*",
         },
-        "body": body
+        "body": json.dumps(body_json)
         }
