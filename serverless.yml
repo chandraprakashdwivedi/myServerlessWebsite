@@ -6,7 +6,6 @@ provider:
   versionFunctions: false
   stage: dev
   region: ap-south-1
-
   
 
   iamRoleStatements:
@@ -43,7 +42,11 @@ functions:
             path: lambda_functions/login
             method: POST
             cors: true
-
+        - http:
+            path: lambda_functions/upload
+            method: POST
+            cors: true
+            
 
 resources:
   Resources:
@@ -51,6 +54,18 @@ resources:
           Type: AWS::S3::Bucket
           Properties:
               BucketName: ${self:service}-${self:provider.stage}-uploads
+              AccessControl: PublicRead
+              CorsConfiguration:
+                  CorsRules:
+                  - AllowedMethods:
+                    - GET
+                    - PUT
+                    - POST
+                    - HEAD
+                    AllowedOrigins:
+                    - "*"
+                    AllowedHeaders:
+                    - "*"
               WebsiteConfiguration:
                 IndexDocument: signup.html
                 ErrorDocument: error.html
