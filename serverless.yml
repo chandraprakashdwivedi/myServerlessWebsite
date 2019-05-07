@@ -44,7 +44,7 @@ functions:
             cors: true
         - http:
             path: lambda_functions/upload
-            method: POST
+            method: GET
             cors: true
             
 
