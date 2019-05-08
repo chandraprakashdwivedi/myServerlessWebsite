@@ -66,10 +66,27 @@ resources:
                     - "*"
                     AllowedHeaders:
                     - "*"
-             # BucketPolicy: Also needed to be applied if going to upload from webpage
               WebsiteConfiguration:
                 IndexDocument: signup.html
                 ErrorDocument: error.html
+              PolicyDocument:
+                Statement:
+                  - Sid: PublicReadGetObject
+                    Effect: Allow
+                    Principal: "*"
+                    Action:
+                    - s3:GetObject
+                    Resource:
+                      Fn::Join: [
+                        "", [
+                          "arn:aws:s3:::",
+                          {
+                            "Ref": "uploadBucket"
+                          },
+                          "/*"
+                        ]
+                      ]
+
       TestDynamoDbTable:
           Type: 'AWS::DynamoDB::Table'
           DeletionPolicy: Retain
