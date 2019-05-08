@@ -66,6 +66,7 @@ resources:
                     - "*"
                     AllowedHeaders:
                     - "*"
+             # BucketPolicy: Also needed to be applied if going to upload from webpage
               WebsiteConfiguration:
                 IndexDocument: signup.html
                 ErrorDocument: error.html
